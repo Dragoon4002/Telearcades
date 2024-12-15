@@ -1,8 +1,14 @@
 "use client";
 
 import React from 'react';
+import { ReactNode } from 'react';
+interface CardProps {
+  children: ReactNode;
+  className?: string;
+  [key: string]: any;
+}
 
-export const Card = ({ children, className = "", ...props }) => (
+export const Card = ({ children, className = "", ...props }: CardProps) => (
   <div 
     className={`
       bg-white rounded-xl shadow-lg 
@@ -16,7 +22,7 @@ export const Card = ({ children, className = "", ...props }) => (
   </div>
 );
 
-export const CardHeader = ({ children, className = "", ...props }) => (
+export const CardHeader = ({ children, className = "", ...props }: CardProps) => (
   <div 
     className={`
       px-6 py-4 border-b border-gray-100
@@ -28,7 +34,7 @@ export const CardHeader = ({ children, className = "", ...props }) => (
   </div>
 );
 
-export const CardTitle = ({ children, className = "", ...props }) => (
+export const CardTitle = ({ children, className = "", ...props }: CardProps) => (
   <h2 
     className={`
       text-2xl font-bold text-gray-800
@@ -40,7 +46,7 @@ export const CardTitle = ({ children, className = "", ...props }) => (
   </h2>
 );
 
-export const CardContent = ({ children, className = "", ...props }) => (
+export const CardContent = ({ children, className = "", ...props }: CardProps) => (
   <div 
     className={`
       p-6
@@ -57,7 +63,7 @@ export const GameCard = ({
   className = "", 
   gradient = "from-blue-50 to-purple-50",
   ...props 
-}) => (
+}: CardProps & { gradient?: string }) => (
   <Card 
     className={`
       max-w-4xl mx-auto mt-8 
@@ -70,13 +76,21 @@ export const GameCard = ({
   </Card>
 );
 
+interface CardButtonProps {
+  children: ReactNode;
+  variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning'; // Define valid variants
+  size?: 'sm' | 'md' | 'lg'; // Define valid sizes
+  className?: string;
+  [key: string]: any; // For other props, e.g., event handlers
+}
+
 export const CardButton = ({ 
   children, 
   variant = "primary", 
   size = "md",
   className = "", 
   ...props 
-}) => {
+}: CardButtonProps) => {
   const variants = {
     primary: "bg-blue-600 hover:bg-blue-700 text-white",
     secondary: "bg-gray-600 hover:bg-gray-700 text-white",
@@ -110,8 +124,10 @@ export const CardButton = ({
     </button>
   );
 };
-
-export const CardAlert = ({ children, type = "info", className = "", ...props }) => {
+interface CardAlertProps extends CardProps {
+  type?: 'info' | 'success' | 'warning' | 'error'; // Ensure `type` is one of the valid keys
+}
+export const CardAlert = ({ children, type = "info", className = "", ...props }: CardAlertProps) => {
   const types = {
     info: "bg-blue-50 text-blue-800 border-blue-200",
     success: "bg-green-50 text-green-800 border-green-200",
@@ -139,7 +155,7 @@ export const CardModal = ({
   children, 
   className = "", 
   ...props 
-}) => {
+}: CardProps & { isOpen: boolean, onClose: () => void }) => {
   if (!isOpen) return null;
 
   return (
@@ -174,7 +190,7 @@ export const CardGrid = ({
   gap = 6,
   className = "", 
   ...props 
-}) => {
+}: CardProps & { columns: { [key: string]: number }, gap: number }) => {
   const cols = {
     default: `grid-cols-${columns.default}`,
     sm: `sm:grid-cols-${columns.sm}`,

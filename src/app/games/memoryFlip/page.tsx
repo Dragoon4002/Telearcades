@@ -19,6 +19,14 @@ const ICONS = [
   Cloud, Sun, Moon, Music, Camera
 ];
 
+type CardType = {
+  id: number;
+  Icon: React.FC<React.SVGProps<SVGSVGElement>>; // Type for the Lucide-react icons
+  isFlipped: boolean;
+  isMatched: boolean;
+};
+
+
 const createBoard = () => {
   const pairs = [...ICONS, ...ICONS];
   return pairs
@@ -32,8 +40,8 @@ const createBoard = () => {
 };
 
 const MemoryFlip = () => {
-  const [cards, setCards] = useState([]);
-  const [flippedCards, setFlippedCards] = useState([]);
+  const [cards, setCards] = useState<CardType[]>([]);
+  const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [score, setScore] = useState(0);
   const [moves, setMoves] = useState(0);
   const [showPrize, setShowPrize] = useState(false);
@@ -102,7 +110,7 @@ const MemoryFlip = () => {
     }
   }, [cards, moves]);
 
-  const handleCardClick = (index) => {
+  const handleCardClick = (index: number) => {
     if (
       gameStatus !== 'playing' ||
       flippedCards.length === 2 ||
