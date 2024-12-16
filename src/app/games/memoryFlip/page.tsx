@@ -7,7 +7,7 @@ import { client } from "../../client";
 import { inAppWallet } from "thirdweb/wallets";
 import { shortenAddress } from "thirdweb/utils";
 import { getContract } from "thirdweb";
-import { baseSepolia } from "thirdweb/chains";
+import { defineChain } from "thirdweb/chains";
 import { claimTo, getBalance } from "thirdweb/extensions/erc20";
 import { 
   Heart, Star, Circle, Square, Triangle, 
@@ -25,7 +25,6 @@ type CardType = {
   isFlipped: boolean;
   isMatched: boolean;
 };
-
 
 const createBoard = () => {
   const pairs = [...ICONS, ...ICONS];
@@ -55,8 +54,8 @@ const MemoryFlip = () => {
 
   const contract = getContract({
     client: client,
-    chain: baseSepolia,
-    address: "<YOUR_TOKEN_CONTRACT_ADDRESS>"
+    chain: defineChain(5003),
+    address: "0x69ED2e06eD7E614119eD1be679f9A540E1503BA4"
   });
 
   const { data: tokenbalance } = useReadContract(
@@ -145,7 +144,7 @@ const MemoryFlip = () => {
             <ConnectButton
               client={client}
               accountAbstraction={{
-                chain: baseSepolia,
+                chain: defineChain(5003),
                 sponsorGas: true
               }}
               wallets={[
